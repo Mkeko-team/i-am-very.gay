@@ -15,5 +15,19 @@
       }
     ],
     "ns_reason": ""
+  },
+  {
+    "sub": "fynn",
+    "owner": {
+      "gh": "fynnlukah2",
+      "contact": "youremail@example.com"
+    },
+    "dns": [
+      {
+        "kind": "TXT",
+        "target": "fy test"
+      }
+    ],
+    "ns_reason": "I need to delegate this subdomain for a project (required only for NS records)."
   }
 ]
