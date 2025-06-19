@@ -1,0 +1,19 @@
+[
+  {
+    "sub": "mkeko",
+    "owner": {
+      "gh": "mkeko",
+      "contact": ""
+    },
+    "dns": [
+      {
+        "kind": "A",
+        "name": "mkeko",
+        "content": "1.2.3.4",
+        "proxy": false,
+        "ttl": 0
+      }
+    ],
+    "ns_reason": ""
+  }
+]
