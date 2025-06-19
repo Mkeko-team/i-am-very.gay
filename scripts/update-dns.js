@@ -18,19 +18,23 @@ const files = fs.readdirSync('./domain');
   for (const file of files) {
     const content = JSON.parse(fs.readFileSync(path.join('./domain', file)));
     const req = content.request;
-    const name = `${req.sub}.i-am-very.gay`;
     for (const rec of req.dns) {
-      if (rec.kind === 'NS' && !req.ns_reason) {
-        console.error(`NS record for ${name} requires a justification (ns_reason). Skipping.`);
-        continue;
-      }
-      console.log(`Creating ${rec.kind} record for ${name} → ${rec.target}`);
-      await axios.post(BASE_URL, {
+      const fqdn = `${rec.name}.i-am-very.gay`;
+      const recordData = {
         type: rec.kind,
-        name,
-        content: rec.target,
-        ttl: 3600,
-      }, { headers }).catch(err => {
+        name: fqdn,
+        content: rec.content
+      };
+      if (typeof rec.proxy === 'boolean') recordData.proxied = rec.proxy;
+      // TTL logic: if proxy is true, omit ttl (Cloudflare auto); if proxy is false, require ttl, but if missing or 0, omit for auto
+      if (rec.proxy === true) {
+        // Do not set ttl, Cloudflare will use auto
+      } else {
+        if (rec.ttl && rec.ttl > 0) {
+          recordData.ttl = rec.ttl;
+        } // else omit ttl for auto
+      }
+      await axios.post(BASE_URL, recordData, { headers }).catch(err => {
         if (err.response?.data?.errors) {
           console.error(err.response.data.errors);
         } else {

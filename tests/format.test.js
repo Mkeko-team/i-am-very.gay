@@ -18,7 +18,10 @@ files.forEach((file) => {
     t.true(data.request.dns.length > 0, `${file}: 'request.dns' must have at least one record`);
     data.request.dns.forEach((rec) => {
       t.truthy(rec.kind, `${file}: DNS record missing 'kind'`);
-      t.truthy(rec.target, `${file}: DNS record missing 'target'`);
+      t.truthy(rec.name, `${file}: DNS record missing 'name'`);
+      t.truthy(rec.content, `${file}: DNS record missing 'content'`);
+      t.true(typeof rec.proxy === 'boolean', `${file}: DNS record missing 'proxy' (boolean)`);
+      t.true(Number.isInteger(rec.ttl), `${file}: DNS record missing 'ttl' (integer)`);
       t.true(allowedKinds.includes(rec.kind), `${file}: DNS record kind '${rec.kind}' is not allowed`);
       if (rec.kind === "NS") {
         t.truthy(data.request.ns_reason, `${file}: NS record requires 'ns_reason'`);

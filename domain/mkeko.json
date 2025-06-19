@@ -6,8 +6,13 @@
       "contact": ""
     },
     "dns": [
-      { "kind": "A", "target": "1.2.3.4" }
-    ],
-    "ns_reason": ""
+      {
+        "kind": "A",
+        "name": "mkeko",
+        "content": "1.2.3.4",
+        "proxy": false,
+        "ttl": 0
+      }
+    ]
   }
 } 
