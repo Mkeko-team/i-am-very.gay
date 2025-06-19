@@ -1,0 +1,14 @@
+{
+  "request": {
+    "sub": "example",
+    "owner": {
+      "gh": "exampleuser",
+      "contact": "example@example.com"
+    },
+    "dns": [
+      { "kind": "A", "target": "1.2.3.4" },
+      { "kind": "TXT", "target": "hello i-am-very.gay" }
+    ],
+    "ns_reason": ""
+  }
+} 

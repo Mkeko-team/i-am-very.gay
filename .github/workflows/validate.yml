@@ -1,0 +1,36 @@
+name: Validate Subdomain Request
+
+on:
+  pull_request:
+    paths:
+      - 'domain/*.json'
+
+jobs:
+  validate-json:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Validate JSON files
+        run: |
+          for file in domain/*.json; do
+            echo "Validating $file..."
+            # Check required fields
+            jq 'select(.subdomain and .owner and .owner.github and .record and .record.type and .record.value)' "$file" > /dev/null || {
+              echo "::error file=$file::Invalid format. Required fields: subdomain, owner.github, record.type, record.value";
+              exit 1;
+            }
+            # Check allowed record types
+            type=$(jq -r '.record.type' "$file")
+            if [ "$type" = "NS" ]; then
+              # Require a justification field for NS records
+              justification=$(jq -r '.justification // empty' "$file")
+              if [ -z "$justification" ]; then
+                echo "::error file=$file::NS records require a 'justification' field explaining why it is needed.";
+                exit 1;
+              fi
+            elif [ "$type" != "A" ] && [ "$type" != "AAAA" ] && [ "$type" != "TXT" ]; then
+              echo "::error file=$file::Only A, AAAA, TXT, and (with justification) NS records are allowed.";
+              exit 1;
+            fi
+          done 

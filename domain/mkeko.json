@@ -1,0 +1,10 @@
+{
+  "subdomain": "mkeko",
+  "owner": {
+    "github": "mkeko"
+  },
+  "record": {
+    "type": "A",
+    "value": "1.2.3.4"
+  }
+} 

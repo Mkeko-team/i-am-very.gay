@@ -15,15 +15,74 @@
 
 ---
 
-## 🚀 Register a Subdomain
+# i-am-very.gay Subdomain Registry
 
-1. [Fork this repo](https://github.com/Mkeko-team/i-am-very.gay/fork)
-2. Create your subdomain config in the `/domains` folder
-3. Open a pull request
-4. We'll review and merge it
-5. Your subdomain will go live shortly through Cloudflare
+Welcome to the **i-am-very.gay** subdomain registry! This is a modern, community-driven, and safe way to get your own subdomain under i-am-very.gay.
 
-Want a preview or help? Hop into our Discord.
+---
+
+## 🚀 How to Request a Subdomain
+
+1. **Fork this repository**
+2. **Create a file** in the `/domain` folder named after your subdomain (e.g., `yourname.json`):
+
+   ```json
+   {
+     "request": {
+       "sub": "yourname",
+       "owner": {
+         "gh": "yourgithub",
+         "contact": "youremail@example.com"
+       },
+       "dns": [
+         { "kind": "A", "target": "1.2.3.4" },
+         { "kind": "TXT", "target": "hello i-am-very.gay" }
+       ],
+       "ns_reason": "I need to delegate this subdomain for a project (required only for NS records)."
+     }
+   }
+   ```
+
+   - `request.sub`: The subdomain you want (before `.i-am-very.gay`)
+   - `request.owner.gh`: Your GitHub username
+   - `request.owner.contact`: Your email (optional, for contact)
+   - `request.dns`: Array of DNS records (A, AAAA, TXT, CNAME, etc.)
+   - `request.ns_reason`: Required if you request an NS record (explain why)
+
+3. **Open a Pull Request**
+   - Your PR will be automatically checked for correct format and rules.
+   - If there are errors, GitHub will show them in the PR checks.
+   - Only valid requests will be considered for merging.
+
+4. **Wait for review**
+   - An owner/admin will review and merge valid requests.
+   - We do not auto-merge for safety and moderation.
+
+---
+
+## 🛡️ Safety & Moderation
+- All requests are reviewed by a human before being merged.
+- Automated tests check for valid format, ownership, and subdomain rules.
+- No secrets or API keys are exposed in any workflow or PR.
+- Abuse, spam, or malicious requests will be rejected.
+
+---
+
+## 📝 Rules & Validation
+- Only one subdomain per user (unless otherwise approved).
+- No nested subdomains unless you own the parent.
+- No NS records for nested subdomains unless allowed and justified.
+- Only valid DNS record types and values are accepted.
+- See the test suite for all enforced rules.
+
+---
+
+## ❓ Questions or Issues?
+Open an issue or discussion in this repo. For privacy or sensitive matters, contact the repo owner directly.
+
+---
+
+**This project is for the i-am-very.gay community. Please be respectful and follow the rules!**
 
 ---
 
@@ -57,7 +116,7 @@ Spotted malicious, harmful, or illegal use of a subdomain?
 
 📩 [Open an abuse report](https://github.com/Mkeko-team/i-am-very.gay/issues/new?assignees=&labels=report-abuse&template=report-abuse.md&title=Report+abuse)
 
-We’ll review and remove anything that violates our policies or law.
+We'll review and remove anything that violates our policies or law.
 
 ---
 
@@ -78,7 +137,7 @@ We proudly use [Cloudflare](https://www.cloudflare.com/) for blazing-fast DNS, S
 - All project code is under the [MIT License](LICENSE)
 - Subdomain entries submitted by users are considered public domain (CC0)
 
-You're free to use, fork, or remix — just don’t be evil.
+You're free to use, fork, or remix — just don't be evil.
 
 ---
 
