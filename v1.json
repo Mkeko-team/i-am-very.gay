@@ -17,17 +17,20 @@
     "ns_reason": ""
   },
   {
-    "sub": "fynn",
+    "sub": "fy",
     "owner": {
-      "gh": "fynnlukah2",
-      "contact": "youremail@example.com"
+      "gh": "fy",
+      "contact": ""
     },
     "dns": [
       {
-        "kind": "TXT",
-        "target": "fy test"
+        "kind": "txt",
+        "name": "fynn",
+        "content": "testreuh",
+        "proxy": false,
+        "ttl": 0
       }
     ],
-    "ns_reason": "I need to delegate this subdomain for a project (required only for NS records)."
+    "ns_reason": ""
   }
 ]
