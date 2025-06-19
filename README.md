@@ -29,25 +29,27 @@ Welcome to the **i-am-very.gay** subdomain registry! This is a modern, community
    ```json
    {
      "request": {
-       "sub": "yourname",
+       "sub": "subdomain",
        "owner": {
-         "gh": "yourgithub",
-         "contact": "youremail@example.com"
+         "gh": "yourgithubuser",
+         "contact": ""
        },
        "dns": [
-         { "kind": "A", "target": "1.2.3.4" },
-         { "kind": "TXT", "target": "hello i-am-very.gay" }
-       ],
-       "ns_reason": "I need to delegate this subdomain for a project (required only for NS records)."
+         {
+           "kind": "a",
+           "content": "1.2.3.4",
+           "proxy": false,
+           "ttl": 0
+         }
+       ]
      }
    }
    ```
 
-   - `request.sub`: The subdomain you want (before `.i-am-very.gay`)
-   - `request.owner.gh`: Your GitHub username
-   - `request.owner.contact`: Your email (optional, for contact)
-   - `request.dns`: Array of DNS records (A, AAAA, TXT, CNAME, etc.)
-   - `request.ns_reason`: Required if you request an NS record (explain why)
+   - `kind`: DNS record type, **lowercase** (e.g., `a`, `aaaa`, `txt`, `cname`)
+   - `content`: The value for your DNS record
+   - `proxy`: `true` for proxied (no `ttl` needed), `false` for DNS only
+   - `ttl`: `0` for automatic, or a number (in seconds, e.g., `3600` for 1 hour)
 
 3. **Open a Pull Request**
    - Your PR will be automatically checked for correct format and rules.

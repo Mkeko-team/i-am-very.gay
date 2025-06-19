@@ -1,0 +1,57 @@
+name: Registry
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'domain/**'
+      - 'tests/**'
+      - 'scripts/**'
+      - 'package.json'
+      - '.github/workflows/registry.yml'
+  pull_request:
+    paths:
+      - 'domain/**'
+      - 'tests/**'
+      - 'package.json'
+      - '.github/workflows/registry.yml'
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install
+      - name: Shell validation (format check)
+        run: |
+          for file in domain/*.json; do
+            echo "Validating $file..."
+            jq 'select(.request and .request.sub and .request.owner and .request.owner.gh and .request.dns)' "$file" > /dev/null || {
+              echo "::error file=$file::Invalid format. Required fields: request.sub, request.owner.gh, request.dns";
+              exit 1;
+            }
+          done
+      - name: Run tests
+        run: npm test
+      - name: Auto-label PRs
+        if: github.event_name == 'pull_request' && github.event.action == 'opened'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: subdomain-request
+      - name: Update Cloudflare DNS
+        if: github.ref == 'refs/heads/main'
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+        run: node scripts/update-dns.js
+      - name: Generate API JSON
+        if: github.ref == 'refs/heads/main'
+        run: node scripts/generate-api.js raw-api/v1.json
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./raw-api 
