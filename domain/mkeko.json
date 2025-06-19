@@ -1,10 +1,13 @@
 {
-  "subdomain": "mkeko",
-  "owner": {
-    "github": "mkeko"
-  },
-  "record": {
-    "type": "A",
-    "value": "1.2.3.4"
+  "request": {
+    "sub": "mkeko",
+    "owner": {
+      "gh": "mkeko",
+      "contact": ""
+    },
+    "dns": [
+      { "kind": "A", "target": "1.2.3.4" }
+    ],
+    "ns_reason": ""
   }
 } 
