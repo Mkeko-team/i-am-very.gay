@@ -22,7 +22,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
-        run: npm install
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+      - name: Check axios install
+        run: node -e "require('axios'); console.log('axios is installed!')"
       - name: Shell validation (format check)
         run: |
           for file in domain/*.json; do
