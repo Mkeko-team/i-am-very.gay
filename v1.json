@@ -15,22 +15,5 @@
       }
     ],
     "ns_reason": ""
-  },
-  {
-    "sub": "fy",
-    "owner": {
-      "gh": "fy",
-      "contact": ""
-    },
-    "dns": [
-      {
-        "kind": "txt",
-        "name": "fynn",
-        "content": "testreuh",
-        "proxy": false,
-        "ttl": 0
-      }
-    ],
-    "ns_reason": ""
   }
 ]
